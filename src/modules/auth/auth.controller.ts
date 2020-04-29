@@ -58,7 +58,7 @@ export class AuthController {
 
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({ type: UserDto, description: 'Successfully Registered' })
+    @ApiOkResponse({ type: UserRegisterDto, description: 'Successfully Registered' })
     async userRegister(
         @Body() userRegisterDto: UserRegisterDto,
     ): Promise<UserDto> {
