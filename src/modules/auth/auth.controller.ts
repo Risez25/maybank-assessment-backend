@@ -32,6 +32,7 @@ import { LoginPayloadDto } from './dto/LoginPayloadDto';
 import { UserLoginDto } from './dto/UserLoginDto';
 import { UserRegisterDto } from './dto/UserRegisterDto';
 import { UserUpdateDto } from './dto/UserUpdateDto';
+import { MessageDto } from 'common/dto/MessageDto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -58,7 +59,10 @@ export class AuthController {
 
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({ type: UserRegisterDto, description: 'Successfully Registered' })
+    @ApiOkResponse({
+        type: UserRegisterDto,
+        description: 'Successfully Registered',
+    })
     async userRegister(
         @Body() userRegisterDto: UserRegisterDto,
     ): Promise<UserDto> {
@@ -69,9 +73,8 @@ export class AuthController {
     @Delete('delete/:email')
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({ description: 'User Has Been Deleted' })
-    async deleteUser(@Param('email') email: string): Promise<string> {
-        const deleteUser = await this.userService.deleteUser(email);
-        return { message: deleteUser };
+    async deleteUser(@Param('email') email: string): Promise<MessageDto> {
+        return await this.userService.deleteUser(email);
     }
 
     @Put('update')

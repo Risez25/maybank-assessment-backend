@@ -12,6 +12,7 @@ import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 import { UserUpdateDto } from 'modules/auth/dto/UserUpdateDto';
+import { MessageDto } from 'common/dto/MessageDto';
 
 @Injectable()
 export class UserService {
@@ -57,14 +58,14 @@ export class UserService {
         return new UsersPageDto(users.toDtos());
     }
 
-    async deleteUser(email: string): Promise<string> {
+    async deleteUser(email: string): Promise<MessageDto> {
         await this.userRepository
             .createQueryBuilder()
             .delete()
             .from(UserEntity)
             .where('email = :email', { email: email })
             .execute();
-        return 'User Has Been Deleted';
+        return new MessageDto('Successfully delte user');
     }
 
     async updateUser(userUpdateDto: UserUpdateDto): Promise<UserEntity> {
