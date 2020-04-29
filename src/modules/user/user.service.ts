@@ -11,6 +11,7 @@ import { UsersPageDto } from './dto/UsersPageDto';
 import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
+import { UserUpdateDto } from 'modules/auth/dto/UserUpdateDto';
 
 @Injectable()
 export class UserService {
@@ -51,17 +52,20 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async getUsers(pageOptionsDto: UsersPageOptionsDto): Promise<UsersPageDto> {
-        const queryBuilder = this.userRepository.createQueryBuilder('user');
-        const [users, usersCount] = await queryBuilder
-            .skip(pageOptionsDto.skip)
-            .take(pageOptionsDto.take)
-            .getManyAndCount();
+    async getUsers(): Promise<UsersPageDto> {
+        const users = await this.userRepository.find();
+        return new UsersPageDto(users.toDtos());
+    }
 
-        const pageMetaDto = new PageMetaDto({
-            pageOptionsDto,
-            itemCount: usersCount,
+    async updateUser(userUpdateDto: UserUpdateDto): Promise<UserUpdateDto> {
+        let updateUser = await this.userRepository.findOne({
+            email: userUpdateDto.email,
         });
-        return new UsersPageDto(users.toDtos(), pageMetaDto);
+        updateUser.username = userUpdateDto.username;
+        updateUser.email = userUpdateDto.email;
+        updateUser.hobby = userUpdateDto.hobby;
+        updateUser.phone = userUpdateDto.phone;
+        updateUser.skillsets = userUpdateDto.skillsets;
+        await this.userRepository.save(updateUser);
     }
 }

@@ -8,6 +8,7 @@ import {
     UploadedFile,
     UseGuards,
     UseInterceptors,
+    Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -28,6 +29,7 @@ import { AuthService } from './auth.service';
 import { LoginPayloadDto } from './dto/LoginPayloadDto';
 import { UserLoginDto } from './dto/UserLoginDto';
 import { UserRegisterDto } from './dto/UserRegisterDto';
+import { UserUpdateDto } from './dto/UserUpdateDto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -62,13 +64,13 @@ export class AuthController {
         return createdUser.toDto();
     }
 
-    @Get('me')
+    @Put('update')
     @HttpCode(HttpStatus.OK)
-    @UseGuards(AuthGuard)
-    @UseInterceptors(AuthUserInterceptor)
-    @ApiBearerAuth()
-    @ApiOkResponse({ type: UserDto, description: 'current user info' })
-    getCurrentUser(@AuthUser() user: UserEntity) {
-        return user.toDto();
+    @ApiOkResponse({
+        type: UserUpdateDto,
+        description: 'SuccessFully Update User',
+    })
+    async updateUser(@Body() userUpdateDto: UserUpdateDto): Promise<UserDto> {
+        const updateUser = await this.userService.updateUser(userUpdateDto);
     }
 }

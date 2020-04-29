@@ -10,11 +10,7 @@ export class UsersPageDto {
     })
     readonly data: UserDto[];
 
-    @ApiProperty()
-    readonly meta: PageMetaDto;
-
-    constructor(data: UserDto[], meta: PageMetaDto) {
+    constructor(data: UserDto[]) {
         this.data = data;
-        this.meta = meta;
     }
 }
