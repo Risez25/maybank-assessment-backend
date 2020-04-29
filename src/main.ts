@@ -79,7 +79,7 @@ async function bootstrap() {
     }
 
     const port = configService.getNumber('PORT');
-    await app.listen(port);
+    await app.listen(port) || '80';
 
     if (module.hot) {
         module.hot.accept();
