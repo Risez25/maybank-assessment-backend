@@ -75,4 +75,3 @@ mongo
 
 # Docker compose ganarated files
 db-data
-package-lock.json
