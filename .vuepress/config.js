@@ -1,12 +1,10 @@
 module.exports = {
-    title: 'Awesome nest boilerplate 🎉',
-    description: `An ultimate and awesome nodejs boilerplate wrote in typescript`,
-    base: process.env.DEPLOY_ENV === 'gh-pages' ? '/awesome-nest-boilerplate/' : '/',
+    title: 'Maybank Assessment',
+    description: `maybank-assessment`,
+    base: process.env.DEPLOY_ENV === 'gh-pages' ? '/maybank-assessment/' : '/',
     themeConfig: {
         sidebar: [
             ['/', 'Introduction'],
-            '/docs/development',
-            '/docs/architecture',
             // '/docs/tech',
             // '/docs/routing',
             // '/docs/state',

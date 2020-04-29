@@ -1,58 +1,46 @@
-# Awesome NestJS v6 Boilerplate
-
-[![Awesome NestJS](https://img.shields.io/badge/Awesome-NestJS-blue.svg?longCache=true&style=flat-square)](https://github.com/juliandavidmr/awesome-nestjs)
-
-> This is an ever-evolving, very opinionated architecture and dev environment for new node projects using [NestJS](https://nestjs.com). Questions, feedback, and for now, even bikeshedding are welcome. 😄
-
 ## Getting started
 
 ```bash
 # 1. Clone the repository or click on "Use this template" button.
-git clone https://github.com/NarHakobyan/awesome-nest-boilerplate.git my-new-project
+git clone https://risez25@bitbucket.org/risez25/maybankfullstackassessment_be.git my-new-project
 
 # 2. Enter your newly-cloned folder.
 cd my-new-project
 
-# 3. Install dependencies. (Make sure yarn is installed: https://yarnpkg.com/lang/en/docs/install)
-yarn
+# 3. Install dependencies. (Make sure yarn is installed: https://nodejs.org/en/)
+npm install
 
-# 4. Run development server and open http://localhost:3000
-yarn start:dev
+# 4.1 Run development server and open http://localhost:3000
+npm run start:dev
 
-# 5. Read the documentation linked below for "Setup and development".
+# 4.2 Run with HMR development server and open http://localhost:3000
+npm run start:hmr
 ```
+### Database
 
-## Features
+> Note: This Project uses [TypeORM](https://github.com/typeorm/typeorm) with Data Mapper pattern.
 
-<dl>
-  <dt><b>Quick scaffolding</b></dt>
-  <dd>Create modules, services, controller - right from the CLI!</dd>
 
-  <dt><b>Instant feedback</b></dt>
-  <dd>Enjoy the best DX (Developer eXperience) and code your app at the speed of thought! Your saved changes are reflected instantaneously.</dd>
+### Configuration
 
-  <dt><b>JWT Authentication</b></dt>
-  <dd>Installed and configured JWT authentication.</dd>
+Before start install PostgreSQL and fill correct configurations in `.development.env` file
 
-  <dt><b>Next generation Typescript</b></dt>
-  <dd>Always up to date typescript version.</dd>
+```env
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DATABASE=maybankassessment
 
-  <dt><b>Industry-standard routing</b></dt>
-  <dd>It's natural to want to add pages (e.g. /about`) to your application, and routing makes this possible.</dd>
+Some helper script to work with database
 
-  <dt><b>Environment Configuration</b></dt>
-  <dd>development, staging and production environment configurations</dd>
+```bash
+# To create new migration file
+npm run migration:create migration_name
 
-  <dt><b>Swagger Api Documentation</b></dt>
-  <dd>Already integrated API documentation. To see all available endpoints visit http://localhost:3000/documentation</dd>
+# Truncate full database (note: it isn't deleting the database)
+npm run schema:drop
 
-  <dt><b>Linter</b></dt>  
-  <dd>tslint + eslint + prettier = ❤️</dd>
-</dl>
-
-## Documentation
-
-This project includes a `docs` folder with more details on:
-
-1.  [Setup and development](https://narhakobyan.github.io/awesome-nest-boilerplate/docs/development.html#first-time-setup)
-1.  [Architecture](https://narhakobyan.github.io/awesome-nest-boilerplate/docs/architecture.html)
+# Generate migration from update of entities
+npm run migration:generate migration_name
+```
