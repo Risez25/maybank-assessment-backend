@@ -21,6 +21,7 @@ import { ConfigService } from './shared/services/config.service';
 import { SharedModule } from './shared/shared.module';
 import { setupSwagger } from './viveo-swagger';
 
+declare const module: any;
 async function bootstrap() {
     initializeTransactionalContext();
     patchTypeORMRepositoryWithBaseRepository();
@@ -79,6 +80,11 @@ async function bootstrap() {
 
     const port = configService.getNumber('PORT');
     await app.listen(port);
+
+    if (module.hot) {
+        module.hot.accept();
+        module.hot.dispose(() => app.close());
+    }
 
     console.info(`server running on port ${port}`);
 }

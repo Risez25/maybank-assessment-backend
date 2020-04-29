@@ -16,7 +16,6 @@ import { RoleType } from '../../common/constants/role-type';
 import { AuthUser } from '../../decorators/auth-user.decorator';
 import { Roles } from '../../decorators/roles.decorator';
 import { AuthGuard } from '../../guards/auth.guard';
-import { RolesGuard } from '../../guards/roles.guard';
 import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
 import { UsersPageDto } from './dto/UsersPageDto';
 import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
@@ -25,21 +24,13 @@ import { UserService } from './user.service';
 
 @Controller('users')
 @ApiTags('users')
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(AuthGuard)
 @UseInterceptors(AuthUserInterceptor)
 @ApiBearerAuth()
 export class UserController {
     constructor(private _userService: UserService) {}
 
-    @Get('admin')
-    @Roles(RoleType.USER)
-    @HttpCode(HttpStatus.OK)
-    async admin(@AuthUser() user: UserEntity) {
-        return 'only for you admin: ' + user.firstName;
-    }
-
     @Get('users')
-    @Roles(RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,

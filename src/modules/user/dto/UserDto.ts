@@ -8,33 +8,26 @@ import { UserEntity } from '../user.entity';
 
 export class UserDto extends AbstractDto {
     @ApiPropertyOptional()
-    firstName: string;
-
-    @ApiPropertyOptional()
-    lastName: string;
-
-    @ApiPropertyOptional()
     username: string;
-
-    @ApiPropertyOptional({ enum: RoleType })
-    role: RoleType;
 
     @ApiPropertyOptional()
     email: string;
 
     @ApiPropertyOptional()
-    avatar: string;
+    phone: string;
 
     @ApiPropertyOptional()
-    phone: string;
+    skillsets: string;
+
+    @ApiPropertyOptional()
+    hobby: string;
 
     constructor(user: UserEntity) {
         super(user);
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
-        this.role = user.role;
+        this.username = user.username;
         this.email = user.email;
-        this.avatar = user.avatar;
         this.phone = user.phone;
+        this.skillsets = user.skillsets;
+        this.hobby = user.hobby;
     }
 }

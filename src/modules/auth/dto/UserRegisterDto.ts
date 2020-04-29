@@ -15,12 +15,7 @@ export class UserRegisterDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
-    readonly firstName: string;
-
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    readonly lastName: string;
+    readonly username: string;
 
     @IsString()
     @IsEmail()
@@ -29,13 +24,22 @@ export class UserRegisterDto {
     readonly email: string;
 
     @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    readonly phone: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    readonly skillsets: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    readonly hobby: string;
+
+    @IsString()
     @MinLength(6)
     @ApiProperty({ minLength: 6 })
     readonly password: string;
-
-    @Column()
-    @IsPhoneNumber('ZZ')
-    @IsOptional()
-    @ApiProperty()
-    phone: string;
 }

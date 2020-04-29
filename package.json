@@ -7,7 +7,7 @@
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "format": "prettier --write \"src/**/*.ts\"",
-        "start:hmr": "node dist/main",
+        "start:hmr": "nest build --webpack --webpackPath webpack-hmr.config.js",
         "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
         "migration:generate": "ts-node node_modules/typeorm/cli.js migration:generate -f ormconfig -d src/migrations -n",
         "migration:revert": "ts-node node_modules/typeorm/cli.js migration:revert -f ormconfig",
@@ -99,6 +99,7 @@
         "lint-staged": "~9.4.2",
         "nodemon": "^1.19.3",
         "prettier": "^1.18.2",
+        "start-server-webpack-plugin": "^2.2.5",
         "supertest": "^4.0.2",
         "ts-jest": "^24.1.0",
         "ts-loader": "^6.2.0",
@@ -127,11 +128,6 @@
         },
         "coverageDirectory": "../coverage",
         "testEnvironment": "node"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "lint-staged": {
         "*.ts": [

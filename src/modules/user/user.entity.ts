@@ -8,25 +8,22 @@ import { PasswordTransformer } from './password.transformer';
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity<UserDto> {
     @Column({ nullable: true })
-    firstName: string;
-
-    @Column({ nullable: true })
-    lastName: string;
-
-    @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
-    role: RoleType;
+    username: string;
 
     @Column({ unique: true, nullable: true })
     email: string;
-
-    @Column({ nullable: true, transformer: new PasswordTransformer() })
-    password: string;
 
     @Column({ nullable: true })
     phone: string;
 
     @Column({ nullable: true })
-    avatar: string;
+    skillsets: string;
+
+    @Column({ nullable: true })
+    hobby: string;
+
+    @Column({ nullable: true, transformer: new PasswordTransformer() })
+    password: string;
 
     dtoClass = UserDto;
 }
