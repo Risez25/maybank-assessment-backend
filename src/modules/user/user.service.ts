@@ -57,7 +57,17 @@ export class UserService {
         return new UsersPageDto(users.toDtos());
     }
 
-    async updateUser(userUpdateDto: UserUpdateDto): Promise<UserUpdateDto> {
+    async deleteUser(email: string): Promise<string> {
+        await this.userRepository
+            .createQueryBuilder()
+            .delete()
+            .from(UserEntity)
+            .where('email = :email', { email: email })
+            .execute();
+        return 'User Has Been Deleted';
+    }
+
+    async updateUser(userUpdateDto: UserUpdateDto): Promise<UserEntity> {
         let updateUser = await this.userRepository.findOne({
             email: userUpdateDto.email,
         });
@@ -66,6 +76,6 @@ export class UserService {
         updateUser.hobby = userUpdateDto.hobby;
         updateUser.phone = userUpdateDto.phone;
         updateUser.skillsets = userUpdateDto.skillsets;
-        await this.userRepository.save(updateUser);
+        return this.userRepository.save(updateUser);
     }
 }

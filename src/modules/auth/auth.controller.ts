@@ -9,6 +9,8 @@ import {
     UseGuards,
     UseInterceptors,
     Put,
+    Delete,
+    Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -64,6 +66,14 @@ export class AuthController {
         return createdUser.toDto();
     }
 
+    @Delete('delete/:email')
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({ description: 'User Has Been Deleted' })
+    async deleteUser(@Param('email') email: string): Promise<string> {
+        const deleteUser = await this.userService.deleteUser(email);
+        return { message: deleteUser };
+    }
+
     @Put('update')
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
@@ -72,5 +82,6 @@ export class AuthController {
     })
     async updateUser(@Body() userUpdateDto: UserUpdateDto): Promise<UserDto> {
         const updateUser = await this.userService.updateUser(userUpdateDto);
+        return updateUser.toDto();
     }
 }
