@@ -15,7 +15,9 @@
         "webpack": "webpack --config webpack.config.js --progress",
         "migration:create": "ts-node node_modules/typeorm/cli.js migration:create -f ormconfig -d src/migrations -n",
         "schema:drop": "ts-node node_modules/typeorm/cli.js schema:drop -f ormconfig",
-        "start:prod": "node dist/main.js",
+        "start:prod": "node dist/src/main.js",
+        "postinstall": "npm run prestart:prod",
+        "prestart:prod": "rimraf dist && npm run build",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint --fix . --ext .ts",
         "test": "jest",
@@ -113,5 +115,25 @@
         "webpack": "^4.41.1",
         "webpack-cli": "^3.3.9",
         "webpack-node-externals": "^1.7.2"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts"
+        ],
+        "rootDir": "src",
+        "testRegex": ".spec.ts$",
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "coverageDirectory": "../coverage",
+        "testEnvironment": "node"
+    },
+    "lint-staged": {
+        "*.ts": [
+            "eslint --fix",
+            "git add"
+        ]
     }
 }
